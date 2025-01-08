@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Plot Generator</title>
+    <!-- External Libraries -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Internal Styles and Scripts -->
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/table.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
+</head>
+<body>
+    <h1 class="main-title">Data Visualization Tool</h1>
+    <div class="container">
+        <div class="input-section">
+            <div class="section-card">
+                <div class="upload-header">
+                    <h4>Upload CSV/Excel</h4>
+                    <div class="upload-actions">
+                        <input type="file" id="fileInput" accept=".csv,.xlsx,.xls">
+                        <button id="restartBtn" class="secondary-button">
+                            <i class="material-icons">restart_alt</i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-input-container">
+                <div class="table-actions">
+                    <button onclick="addRow()" class="primary-button">Add Row</button>
+                    <button id="deleteRowBtn" class="danger-button" disabled>Delete Selected</button>
+                </div>
+                <div class="table-container">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Value</th>
+                                <th>Pre-min</th>
+                                <th>Pre-max</th>
+                                <th>Post-min</th>
+                                <th>Post-max</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="plot-section">
+            <div class="settings-container">
+                <div class="settings-wrapper">
+                    <div class="section-card">
+                        <div class="chart-settings-header">
+                            <h4>Chart Settings</h4>
+                            <button id="updateChartBtn" class="primary-button">Update Chart</button>
+                        </div>
+                        <div class="settings-grid">
+                            <div class="settings-group">
+                                <label for="chartTitle">Chart Title:</label>
+                                <input type="text" id="chartTitle" class="text-input" 
+                                    placeholder="Chart Title" value="PM2.5濃度 (µg/m³)數值">
+                            </div>
+                            <div class="settings-group">
+                                <label for="xAxisTitle">X-Axis Title:</label>
+                                <input type="text" id="xAxisTitle" class="text-input" 
+                                    placeholder="X-Axis Title" value="月份">
+                            </div>
+                            <div class="settings-group">
+                                <label for="yAxisTitle">Y-Axis Title:</label>
+                                <input type="text" id="yAxisTitle" class="text-input" 
+                                    placeholder="Y-Axis Title" value="PM2.5濃度 (µg/m³)">
+                            </div>
+                            <div class="settings-group">
+                                <label for="preLabel">Pre-correction Label:</label>
+                                <input type="text" id="preLabel" class="text-input" 
+                                    placeholder="Pre-correction Label" value="校正前區間">
+                            </div>
+                            <div class="settings-group">
+                                <label for="postLabel">Post-correction Label:</label>
+                                <input type="text" id="postLabel" class="text-input" 
+                                    placeholder="Post-correction Label" value="校正後區間">
+                            </div>
+                            <div class="settings-group">
+                                <label for="valueLabel">Value Label:</label>
+                                <input type="text" id="valueLabel" class="text-input" 
+                                    placeholder="Value Label" value="測值">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-card">
+                        <h4>Style Customization</h4>
+                        <div class="color-picker-grid">
+                            <div class="color-picker">
+                                <label>Pre-correction Color:</label>
+                                <input type="color" id="preColor" value="#FFA500">
+                            </div>
+                            <div class="color-picker">
+                                <label>Post-correction Color:</label>
+                                <input type="color" id="postColor" value="#008000">
+                            </div>
+                            <div class="color-picker">
+                                <label>Value Line Color:</label>
+                                <input type="color" id="valueColor" value="#FF0000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="plot"></div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="js/utils.js?v=1"></script>
+    <script src="js/dataHandler.js?v=1"></script>
+    <script src="js/plotHandler.js?v=1"></script>
+    <script src="js/main.js?v=1"></script>
+</body>
+</html> 
